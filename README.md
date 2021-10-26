@@ -1,6 +1,6 @@
 
 # update 2
-you can choose your language in set "edition", choice "1"
+you can choose your language in set "edition", choice "1" and "2"
 
 # magic_proxy
 create deck  in one file pdf printer
