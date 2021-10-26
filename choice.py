@@ -42,14 +42,6 @@ if answer == "3":
 	
     
     
-        
-
-
-        
-        
-
-
 if answer == "4":
-        from howmuch import *
-        request_url(name)
+    exec(open(path2 + "/price.py").read())
        
