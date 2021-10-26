@@ -1,15 +1,48 @@
+try:
+    import requests
+    import scrython
+    import imageio
+    import requests
+    import time
+    import config
+    import numpy as np
+    import os
+    import os.path
+    from fpdf import FPDF, HTMLMixin
+    import glob
+    from numpy.fft import fft2, ifft2, fftshift, ifftshift
+    from skimage.transform import resize
+    import pygame
+    import shutil
+    import subprocess
+
+except ImportError:
+  print ("Trying to Install required module:")
+  os.system('pip3 install requests')
+  os.system('pip3 install scrython')
+  os.system('pip3 install imageio')
+  os.system('pip3 install time')
+  os.system('pip3 install numpy')
+  os.system('pip3 install pygame')
+import shutil
+import subprocess
 import scrython
 import imageio
 import requests
 import time
 import config
-import os
 import numpy as np
+import os
+import os.path
+from fpdf import FPDF, HTMLMixin
+import glob
 from numpy.fft import fft2, ifft2, fftshift, ifftshift
 from skimage.transform import resize
+
 path2 = os.path.dirname(os.path.realpath(__file__))
 print ("i would like create folder of your deck:")
 answer1 = input("desir name of deck folder=> ")
+lang = input("which language, type 2 letters=> ")
 filePath1 = os.path.join(path2, "formatted/", answer1)
 folder = filePath1
 if os.path.isdir(folder):
@@ -26,8 +59,8 @@ def process_card(cardname, expansion=None):
         # If the card specifies which set to retrieve the scan from, do that
         if expansion:
             # Set specified from set formatter
-            query = "!\"" + cardname + "\" set=" + expansion
-            print("Processing: " + cardname + ", set: " + expansion)
+            query = "!\"" + cardname + "\" set=" + expansion +  "\" lang=" + lang
+            print("Processing: " + cardname + ", set: " + expansion +  ", lang: " + lang)
         else:
             query = "!\"" + cardname + "\""
             print("Processing: " + cardname)
@@ -185,14 +218,51 @@ def process_card(cardname, expansion=None):
                  number += 1
         
         imageio.imwrite(full_path, im_padded.astype(np.uint8))
-        img_io = imageio.imread(full_path)
-
-# Resize image
-        img_io = resize(img_io, (1042, 744))
-
-# Write ICO image
-        imageio.imwrite(full_path, img_io)  
+       
         os.chmod(full_path, 0o777)
+        
+        class MyFPDF(FPDF):
+             pass
+    
+        def photos_pdf():
+             pdf = MyFPDF("P", format='A4', unit='mm')
+             photos = glob.glob(filePath1 + "/*.png")
+             x = 5 
+             y = 5 
+             counter = 0
+             nbre = 2
+             nbre_par_page = 6
+             counter2 = 0
+             pdf.add_page()
+             for photo in photos:
+                if counter2 != nbre_par_page:    
+                    if counter != (nbre):
+                        pdf.image(photo, x=x, y=y, w=63, h=88)
+                        x += 69
+                        counter += 1
+                        counter2 += 1
+                    
+                    else:
+                        pdf.image(photo, x=x, y=y, w=63, h=88)
+                        y += 90
+                        x = 5
+                        counter = 0
+                        
+                else:
+                    pdf.image(photo, x=x, y=y, w=63, h=88) 
+                    pdf.add_page()
+                    counter = 0
+                    counter2 = 0
+                    
+                    x = 5
+                    y = 5
+               
+           
+             pdf.output(path2 + "/A4_cards.pdf", 'F')
+             os.chmod(path2 + "/A4_cards.pdf", 0o777)
+        photos_pdf()    
+        
+        
 
 if __name__ == "__main__":
     # Loop through each card in cards.txt and scan em all
@@ -204,3 +274,5 @@ if __name__ == "__main__":
                 process_card(cardname[0:pipe_idx], cardname[pipe_idx+1:])
             except ValueError:
                 process_card(cardname)
+
+

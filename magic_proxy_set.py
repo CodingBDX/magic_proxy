@@ -1,3 +1,4 @@
+
 from setting import *
 
 # Scan every card in a set
@@ -5,6 +6,7 @@ page = 0
 cardnames = []
 more = True
 expansion = input("Type the three-character set code for the set you want to scan: ")
+
 
 # ensure we get every card from the set (multiple search result pages)
 while more:
@@ -14,7 +16,7 @@ while more:
     cardnames = cardnames + [cardset.data()[x]["name"] for x in range(len(cardset.data()))]
     page += 1
 
-print("Collected search results for set: " + expansion)
+print("Collected search results for set: " + expansion + "/" + lang)
 
 for cardname in sorted(set(cardnames)):
     process_card(cardname, expansion=expansion)
