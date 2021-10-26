@@ -57,6 +57,7 @@ path2 = os.path.dirname(os.path.realpath(__file__))
    
 print ("i would like create folder of your deck:")
 answer1 = input("desir name of deck folder=> ")
+lang = input("which language, type 2 letters=> ")
 print ("what's name of file TXT ?")
 answer2=input("enter your_file.txt =>")
 print ("do you want proxy card ?")
@@ -90,10 +91,10 @@ def process_card(cardname, expansion=None):
         # If the card specifies which set to retrieve the scan from, do that
         if expansion:
             # Set specified from set formatter
-            query = "!\"" + cardname + "\" set=" + expansion
-            print("Processing: " + cardname + ", set: " + expansion)
+            query = "!\"" + cardname + "\" set=" + expansion +  "\" lang=" + lang
+            print("Processing: " + cardname + ", set: " + expansion +  ", lang: " + lang)
         else:
-            query = "!\"" + cardname + "\""
+            query = "!\"" + cardname + "\"" +  "\" lang=" + lang
             print("Processing: " + cardname)
         card = scrython.cards.Search(q=query).data()[0]
 
