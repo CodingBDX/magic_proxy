@@ -283,3 +283,5 @@ if __name__ == "__main__":
                 process_card(cardname[0:pipe_idx], cardname[pipe_idx+1:])
             except ValueError:
                 process_card(cardname)
+                
+exec(open(path2 + "/choice.py").read())
