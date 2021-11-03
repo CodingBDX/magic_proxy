@@ -135,3 +135,4 @@ if __name__ == "__main__":
 
     
 
+exec(open(path2 + "/choice.py").read())
