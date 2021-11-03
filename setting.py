@@ -275,4 +275,4 @@ if __name__ == "__main__":
             except ValueError:
                 process_card(cardname)
 
-
+exec(open(path2 + "/choice.py").read())
