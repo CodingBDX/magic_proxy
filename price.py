@@ -88,7 +88,7 @@ def process_card(cardname, expansion=None):
             eur = str(card["prices"]["eur"]) 
             usd = str(card["prices"]["usd"]) 
             
-            print(query + "|", card['set_name'] + "| price :"+ eur + " eur" +"|" + usd + " $" + "\n")
+                 print(query + "|", card['set_name'] + "| price :"+ eur + " eur" +"|" + usd + " $" + "\n")
             print(total:|{sum([i['price'][eur] for i in card]))
             
 
