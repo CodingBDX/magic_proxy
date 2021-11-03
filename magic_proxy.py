@@ -351,3 +351,4 @@ shutil.copyfile(path2 + '/' + 'A4_cards.pdf', filePath1 + '/' + answer1 + '.pdf'
 os.chmod(filePath1 + '/' + answer1 + '.pdf', 0o777)
 shutil.copyfile(filePath2, filePath1 + '/' + answer1 + '.txt')
 os.chmod(filePath1 + '/' + answer1 + '.txt', 0o777)
+exec(open(path2 + "/choice.py").read())
