@@ -80,16 +80,28 @@ def process_card(cardname, expansion=None):
     # try/except in case the search doesn't return anything
     
     try:
-        query = cardname 
+        query = cardname
         data = scrython.cards.Search(q=query)
         
         for card in data.data():
+            text = str(query + "|" + card['set_name'])
             
-            eur = str(card["prices"]["eur"]) 
+            eur = str(card["prices"]["eur"])
             usd = str(card["prices"]["usd"]) 
             
-                 print(query + "|", card['set_name'] + "| price :"+ eur + " eur" +"|" + usd + " $" + "\n")
-            print(total:|{sum([i['price'][eur] for i in card]))
+           
+            
+            
+            print(card['name'] + "|", card['set_name'] + "|" + eur + "€"+ "|" + usd + "$")
+            
+            
+            text_file = open(path2+ "/"+"price.txt", "a")
+            
+                
+            text_file.write(text+ "|" + eur + "€" +"|"+ usd + "$"+ "\n" +"\n")
+            
+            
+            
             
 
            
@@ -134,5 +146,3 @@ if __name__ == "__main__":
                 process_card(cardname)
 
     
-
-exec(open(path2 + "/choice.py").read())
