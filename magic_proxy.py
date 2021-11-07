@@ -94,9 +94,15 @@ def process_card(cardname, expansion=None):
             query = "!\"" + cardname + "\" set=" + expansion +  "\" lang=" + lang
             print("Processing: " + cardname + ", set: " + expansion +  ", lang: " + lang)
         else:
-            query = "!\"" + cardname + "\"" +  "\" lang=" + lang
-            print("Processing: " + cardname)
-        card = scrython.cards.Search(q=query).data()[0]
+            query = cardname
+            data = scrython.cards.Search(q=query)
+            
+            for card in data.data():
+                    text = str(query + "|" + card['set_name'] + "|" + lang)
+                    query = "!\"" + cardname + "\"" +  "\" lang=" + lang 
+            
+                    print("Processing: " + text)
+                    card = scrython.cards.Search(q=query).data()[0]
 
     except scrython.foundation.ScryfallError:
         print("Couldn't find card: " + cardname)
